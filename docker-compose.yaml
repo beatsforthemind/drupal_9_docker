@@ -1,0 +1,43 @@
+version: '2'
+services:
+  drupal-www:
+    build: .
+    hostname: 'drupal-www'
+    container_name: 'drupal-www'
+    entrypoint: /entrypoint.sh
+    command: httpd-foreground
+    ports:
+      - '80:80'
+    volumes:
+      - './drupal:/var/www'
+      - './entrypoint.sh:/entrypoint.sh'
+      - './files:/var/www/html/sites/default/files'
+    networks:
+      - app
+    depends_on:
+      - mysql-drupal 
+    working_dir: '/var/www'
+    links:
+      - 'mysql-drupal:mysql-drupal'
+
+  mysql-drupal:
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=qwe123'
+    ports:
+      - '3306:3306'
+    volumes:
+      - 'drupal-mysql-data:/var/lib/mysql'
+    image: 'mariadb:10.4'
+    container_name: 'mysql-drupal'
+    hostname: 'mysql-drupal'
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
+
+volumes:
+  drupal-www-files:
+  drupal-www-tmp:
+  drupal-mysql-data:

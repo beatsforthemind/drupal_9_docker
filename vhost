@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www/web
+
+    <Directory "/var/www/web">
+      Options All
+      AllowOverride All
+      Require all granted
+    </Directory>
+
+    <Directory /var/www/web>
+        Options all
+        allow from all
+        AllowOverride All 
+        Require all granted
+    </Directory>
+
+</VirtualHost>
