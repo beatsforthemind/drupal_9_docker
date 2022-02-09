@@ -1,6 +1,6 @@
 #!/bin/bash
 
-until nc -z mysql-outrider 3306; do
+until nc -z mysql-drupal 3306; do
     echo "$(date) - waiting for mysql..."
     sleep 1
 done
